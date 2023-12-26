@@ -1,5 +1,5 @@
 import random
-from poke.pokemonclass import *
+from pokemonclass import *
     
 
 def main():
