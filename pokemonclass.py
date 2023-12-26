@@ -4,8 +4,8 @@ import random
 class Pokemon():
     
     def __init__(self, pokeID="1"):
-        self.__pokeAPIData = (requests.get("https://pokeapi.co/api/v2/pokemon/" + str(pokeID.lower()))).json()
-        self.__speciesAPIData = (requests.get("https://pokeapi.co/api/v2/pokemon-species/" + str(pokeID.lower()))).json()
+        self.__pokeAPIData = (requests.get("https://pokeapi.co/api/v2/pokemon/" + str(pokeID).lower())).json()
+        self.__speciesAPIData = (requests.get("https://pokeapi.co/api/v2/pokemon-species/" + str(pokeID).lower())).json()
         self.__ID = self.getNatDexNum(giveback = False)
         self.__types = self.getType(giveback = False)
         self.__dexEntries = self.__createdexlib()
@@ -13,7 +13,11 @@ class Pokemon():
         self.__abilities, self.__hiddenabilities = self.getAbilities()
     
     def __str__(self):
-        s = f"The pokemon is #{self.__ID} in the National Dex and is named {self.__name}, with the type(s) {', '.join(map(str,self.__types))}. \nIt has the potential abilities {', '.join(map(str,self.__abilities[:len(self.__abilities)-1]))}, and {self.__abilities[-1]}"
+        if len(self.__abilities) > 1:
+            abilitiesS = f"{', '.join(map(str,self.__abilities[:len(self.__abilities)-1]))}, and {self.__abilities[-1]}"
+        else:
+            abilitiesS= f"{''.join(map(str,self.__abilities))}"
+        s = f"The pokemon is #{self.__ID} in the National Dex and is named {self.__name}, with the type(s) {', '.join(map(str,self.__types))}. \nIt has the potential abilitie(s) {abilitiesS}"
         return s
     
     def __repr__(self):
@@ -84,3 +88,12 @@ class Pokemon():
     def captureRate(self):
         n = self.__speciesAPIData["capture_rate"]
         return n
+    
+    def height(self):
+        height = self.__pokeAPIData["height"]
+        return height
+    
+    def weight(self):
+        weight = self.__pokeAPIData["weight"]
+        return weight
+    
