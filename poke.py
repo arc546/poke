@@ -5,19 +5,19 @@ from pokemonclass import *
 def main():
     pokenum = random.choice(list(range(1,1009))) #All pokemon from gen 1 to vanilla gen 9
     pokechoice = Pokemon(pokenum)
-    text, gameVers = pokechoice.getrndmdexentry()
+    text, gameVers = pokechoice.getRndmDexEntry()
     text = textClean(pokechoice, text)
     guessingGame(pokechoice, text, gameVers)
     
 def textClean(pokemon, text):
-    if pokemon.getname().upper() in text:
-        text = text.replace(pokemon.getname().upper(),"REDACTED")
-    elif pokemon.getname() in text:
-        text = text.replace(pokemon.getname(),"REDACTED")
+    if pokemon.name().upper() in text:
+        text = text.replace(pokemon.name().upper(),"REDACTED")
+    elif pokemon.name() in text:
+        text = text.replace(pokemon.name(),"REDACTED")
     return text
 
 def guessingGame(pokemon, text, gamevers):
-    s = f"The Pokemon I'm thinking of is #{str(pokemon.getnatdexnum())} and has type(s) {' '.join([i for i in pokemon.gettype()])} You have three tries, goodLuck"
+    s = f"The Pokemon I'm thinking of is #{str(pokemon.getNatDexNum())} and has type(s) {' '.join([i for i in pokemon.getType()])} You have three tries, goodLuck"
     count = 0
     print(s)
     while count < 3:
@@ -26,7 +26,7 @@ def guessingGame(pokemon, text, gamevers):
             print(f"{text} from Pokemon {gamevers}\n")
             print("Hopefully that helps")
         guess = input(f"guess #{count+1} is? ")
-        if guess == pokemon.getname():
+        if guess == pokemon.name():
             print("You Win!")
             return
         else:
